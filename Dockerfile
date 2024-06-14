@@ -8,5 +8,5 @@ FROM openjdk:21-jdk-slim
 
 WORKDIR /app
 COPY --from=build /app/target/avaliacaofilmes-api.jar .
-EXPOSE 8001
+EXPOSE 8080
 CMD ["java", "-jar", "avaliacaofilmes-api.jar"]

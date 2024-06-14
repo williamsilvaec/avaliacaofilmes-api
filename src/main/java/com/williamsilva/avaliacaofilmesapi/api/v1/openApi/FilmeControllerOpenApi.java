@@ -12,7 +12,7 @@ import java.util.List;
 public interface FilmeControllerOpenApi {
 
     @GetMapping
-    @Operation(summary = "Lista todos os filmes")
+    @Operation(summary = "Lista todos os filmes ordenados pelo ano de premiação (do mais antigo para o mais recente)")
     @ApiResponse(responseCode = "200", description = "Filmes listados")
     @ApiResponse(responseCode = "500", description = "Ocorreu um erro inesperado no servidor")
     List<FilmeModel> listar();
