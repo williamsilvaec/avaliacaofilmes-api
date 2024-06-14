@@ -1,0 +1,21 @@
+version: '3.9'
+
+networks:
+  avaliacaofilmes-network:
+    driver: bridge
+
+services:
+
+  avaliacaofilmes-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: avaliacaofilmes-api
+    container_name: avaliacaofilmes-api
+    command: [ "java", "-jar", "avaliacaofilmes-api.jar" ]
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8080:8001"
+    networks:
+      - avaliacaofilmes-network
