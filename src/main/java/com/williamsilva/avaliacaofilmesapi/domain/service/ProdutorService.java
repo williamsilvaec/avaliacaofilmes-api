@@ -29,7 +29,7 @@ public class ProdutorService {
         Map<String, List<Integer>> produtorVencedor = new HashMap<>();
 
         for (Filme filmeVencedor : FilmesVencedores) {
-            String[] produtores = filmeVencedor.getProdutores().split(",\\s*");
+            String[] produtores = filmeVencedor.getProdutores().split(",\\s*|\\s+and\\s+");
             for (String produtor : produtores) {
                 produtorVencedor.putIfAbsent(produtor, new ArrayList<>());
                 produtorVencedor.get(produtor).add(filmeVencedor.getAno());
