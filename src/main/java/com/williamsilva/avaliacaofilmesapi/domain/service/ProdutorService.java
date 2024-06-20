@@ -51,29 +51,25 @@ public class ProdutorService {
             for (int i = 1; i < anos.size(); i++) {
                 int intervalo = anos.get(i) - anos.get(i - 1);
 
-                ProdutorPremioDTO produtorPremio = new ProdutorPremioDTO();
-                produtorPremio.setProducer(produtor);
-                produtorPremio.setInterval(intervalo);
-                produtorPremio.setPreviousWin(anos.get(i - 1));
-                produtorPremio.setFollowingWin(anos.get(i));
+                var produtorPremio = new ProdutorPremioDTO(produtor, intervalo, anos.get(i - 1), anos.get(i));
 
-                if (intervalosMin.isEmpty() || intervalo < intervalosMin.getFirst().getInterval()) {
+                if (intervalosMin.isEmpty() || intervalo < intervalosMin.getFirst().interval()) {
                     intervalosMin.clear();
                     intervalosMin.add(produtorPremio);
-                } else if (intervalo == intervalosMin.getFirst().getInterval()) {
+                } else if (intervalo == intervalosMin.getFirst().interval()) {
                     intervalosMin.add(produtorPremio);
                 }
 
-                if (intervalosMax.isEmpty() || intervalo > intervalosMax.getFirst().getInterval()) {
+                if (intervalosMax.isEmpty() || intervalo > intervalosMax.getFirst().interval()) {
                     intervalosMax.clear();
                     intervalosMax.add(produtorPremio);
-                } else if (intervalo == intervalosMax.getFirst().getInterval()) {
+                } else if (intervalo == intervalosMax.getFirst().interval()) {
                     intervalosMax.add(produtorPremio);
                 }
             }
         }
 
-        IntervalosPremiosDTO resultado = new IntervalosPremiosDTO();
+        var resultado = new IntervalosPremiosDTO();
         resultado.setMin(intervalosMin);
         resultado.setMax(intervalosMax);
 
