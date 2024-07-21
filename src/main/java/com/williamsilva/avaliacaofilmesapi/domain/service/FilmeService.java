@@ -4,17 +4,19 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
+import com.williamsilva.avaliacaofilmesapi.api.v1.model.FilmeFiltro;
 import com.williamsilva.avaliacaofilmesapi.domain.model.Filme;
 import com.williamsilva.avaliacaofilmesapi.domain.repository.FilmeRepository;
+import com.williamsilva.avaliacaofilmesapi.domain.repository.FilmeSpec;
 import jakarta.annotation.PostConstruct;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.List;
 
 @Service
 public class FilmeService {
@@ -54,7 +56,7 @@ public class FilmeService {
     }
 
     @Transactional(readOnly = true)
-    public List<Filme> listarTodos() {
-        return filmeRepository.findAll(Sort.by("ano").ascending());
+    public Page<Filme> listarTodos(FilmeFiltro filtro, Pageable pageable) {
+        return filmeRepository.findAll(FilmeSpec.comFiltro(filtro), pageable);
     }
 }
