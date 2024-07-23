@@ -78,14 +78,14 @@ public class FilmeService {
     public List<EstudioContagem> obterEstudiosComMaisDeUmVencedor() {
         List<Filme> filmesVencedores = listarVencedores();
 
-        Map<String, Long> contagemPorEstudio = new HashMap<>();
+        Map<String, Integer> contagemPorEstudio = new HashMap<>();
         filmesVencedores.forEach(filme -> {
             Arrays.stream(filme.getEstudios().split(",\\s*"))
-                    .forEach(estudio -> contagemPorEstudio.merge(estudio, 1L, Long::sum));
+                    .forEach(estudio -> contagemPorEstudio.merge(estudio, 1, Integer::sum));
         });
 
         return contagemPorEstudio.entrySet().stream()
-                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
                 .limit(3)
                 .map(entry -> new EstudioContagem(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());

@@ -1,5 +1,6 @@
 package com.williamsilva.avaliacaofilmesapi.domain.dto;
 
+import java.util.Collections;
 import java.util.List;
 
 public class IntervalosPremiosDTO {
@@ -8,7 +9,7 @@ public class IntervalosPremiosDTO {
     private List<ProdutorPremioDTO> max;
 
     public List<ProdutorPremioDTO> getMin() {
-        return min;
+        return Collections.unmodifiableList(min);
     }
 
     public void setMin(List<ProdutorPremioDTO> min) {
@@ -16,7 +17,7 @@ public class IntervalosPremiosDTO {
     }
 
     public List<ProdutorPremioDTO> getMax() {
-        return max;
+        return Collections.unmodifiableList(max);
     }
 
     public void setMax(List<ProdutorPremioDTO> max) {

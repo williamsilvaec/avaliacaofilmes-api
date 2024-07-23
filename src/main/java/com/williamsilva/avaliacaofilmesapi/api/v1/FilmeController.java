@@ -8,7 +8,6 @@ import com.williamsilva.avaliacaofilmesapi.domain.repository.projections.Estudio
 import com.williamsilva.avaliacaofilmesapi.domain.service.FilmeService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,14 +29,12 @@ public class FilmeController implements FilmeControllerOpenApi {
     }
 
     @Override
-    public ResponseEntity<?> listarVencedores() {
-        List<AnoContagem> anoContagems = filmeService.obterAnosComMaisDeUmVencedor();
-        return ResponseEntity.ok(anoContagems);
+    public List<AnoContagem> listarVencedores() {
+        return filmeService.obterAnosComMaisDeUmVencedor();
     }
 
     @Override
-    public ResponseEntity<?> listarEstudiosComMaisDeUmVencedor() {
-        List<EstudioContagem> estudioContagems = filmeService.obterEstudiosComMaisDeUmVencedor();
-        return ResponseEntity.ok(estudioContagems);
+    public List<EstudioContagem> listarEstudiosComMaisDeUmVencedor() {
+        return filmeService.obterEstudiosComMaisDeUmVencedor();
     }
 }
