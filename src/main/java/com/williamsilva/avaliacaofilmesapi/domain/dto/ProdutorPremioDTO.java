@@ -1,5 +1,5 @@
 package com.williamsilva.avaliacaofilmesapi.domain.dto;
 
-public record ProdutorPremioDTO(String producer, Integer interval, Integer previousWin, Integer followingWin) {
+public record ProdutorPremioDTO(String produtor, Integer intervalo, Integer vitoriaAnterior, Integer vitoriaPosterior) {
 
 }

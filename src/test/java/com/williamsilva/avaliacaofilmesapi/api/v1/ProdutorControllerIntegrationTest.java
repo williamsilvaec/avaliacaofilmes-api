@@ -38,14 +38,14 @@ class ProdutorControllerIntegrationTest {
         assertThat(intervalos.getMin().size()).isEqualTo(1);
         assertThat(intervalos.getMax().size()).isEqualTo(1);
 
-        assertEquals(intervalos.getMin().getFirst().producer(), produtorMinEsperado.producer());
-        assertEquals(intervalos.getMin().getFirst().interval(), produtorMinEsperado.interval());
-        assertEquals(intervalos.getMin().getFirst().previousWin(), produtorMinEsperado.previousWin());
-        assertEquals(intervalos.getMin().getFirst().followingWin(), produtorMinEsperado.followingWin());
+        assertEquals(intervalos.getMin().getFirst().produtor(), produtorMinEsperado.produtor());
+        assertEquals(intervalos.getMin().getFirst().intervalo(), produtorMinEsperado.intervalo());
+        assertEquals(intervalos.getMin().getFirst().vitoriaAnterior(), produtorMinEsperado.vitoriaAnterior());
+        assertEquals(intervalos.getMin().getFirst().vitoriaPosterior(), produtorMinEsperado.vitoriaPosterior());
 
-        assertEquals(intervalos.getMax().getFirst().producer(), produtorMaxEsperado.producer());
-        assertEquals(intervalos.getMax().getFirst().interval(), produtorMaxEsperado.interval());
-        assertEquals(intervalos.getMax().getFirst().previousWin(), produtorMaxEsperado.previousWin());
-        assertEquals(intervalos.getMax().getFirst().followingWin(), produtorMaxEsperado.followingWin());
+        assertEquals(intervalos.getMax().getFirst().produtor(), produtorMaxEsperado.produtor());
+        assertEquals(intervalos.getMax().getFirst().intervalo(), produtorMaxEsperado.intervalo());
+        assertEquals(intervalos.getMax().getFirst().vitoriaAnterior(), produtorMaxEsperado.vitoriaAnterior());
+        assertEquals(intervalos.getMax().getFirst().vitoriaPosterior(), produtorMaxEsperado.vitoriaPosterior());
     }
 }

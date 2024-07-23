@@ -3,7 +3,6 @@ package com.williamsilva.avaliacaofilmesapi.domain.service;
 import com.williamsilva.avaliacaofilmesapi.domain.dto.IntervalosPremiosDTO;
 import com.williamsilva.avaliacaofilmesapi.domain.dto.ProdutorPremioDTO;
 import com.williamsilva.avaliacaofilmesapi.domain.model.Filme;
-import com.williamsilva.avaliacaofilmesapi.domain.repository.FilmeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,16 +14,14 @@ import java.util.Map;
 @Service
 public class ProdutorService {
 
-    private final FilmeRepository filmeRepository;
+    private final FilmeService filmeService;
 
-    public ProdutorService(FilmeRepository filmeRepository) {
-        this.filmeRepository = filmeRepository;
+    public ProdutorService(FilmeService filmeService) {
+        this.filmeService = filmeService;
     }
 
     public IntervalosPremiosDTO calcularIntervalosPremiacoes() {
-        List<Filme> FilmesVencedores = filmeRepository.findAll().stream()
-                .filter(Filme::isVencedor)
-                .toList();
+        List<Filme> FilmesVencedores = filmeService.listarVencedores();
 
         Map<String, List<Integer>> produtorVencedor = new HashMap<>();
 
@@ -53,17 +50,17 @@ public class ProdutorService {
 
                 var produtorPremio = new ProdutorPremioDTO(produtor, intervalo, anos.get(i - 1), anos.get(i));
 
-                if (intervalosMin.isEmpty() || intervalo < intervalosMin.getFirst().interval()) {
+                if (intervalosMin.isEmpty() || intervalo < intervalosMin.getFirst().intervalo()) {
                     intervalosMin.clear();
                     intervalosMin.add(produtorPremio);
-                } else if (intervalo == intervalosMin.getFirst().interval()) {
+                } else if (intervalo == intervalosMin.getFirst().intervalo()) {
                     intervalosMin.add(produtorPremio);
                 }
 
-                if (intervalosMax.isEmpty() || intervalo > intervalosMax.getFirst().interval()) {
+                if (intervalosMax.isEmpty() || intervalo > intervalosMax.getFirst().intervalo()) {
                     intervalosMax.clear();
                     intervalosMax.add(produtorPremio);
-                } else if (intervalo == intervalosMax.getFirst().interval()) {
+                } else if (intervalo == intervalosMax.getFirst().intervalo()) {
                     intervalosMax.add(produtorPremio);
                 }
             }
@@ -75,7 +72,6 @@ public class ProdutorService {
 
         return resultado;
     }
-
 
 }
 

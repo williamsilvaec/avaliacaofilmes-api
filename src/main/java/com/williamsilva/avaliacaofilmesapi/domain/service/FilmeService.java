@@ -8,6 +8,8 @@ import com.williamsilva.avaliacaofilmesapi.api.v1.model.FilmeFiltro;
 import com.williamsilva.avaliacaofilmesapi.domain.model.Filme;
 import com.williamsilva.avaliacaofilmesapi.domain.repository.FilmeRepository;
 import com.williamsilva.avaliacaofilmesapi.domain.repository.FilmeSpec;
+import com.williamsilva.avaliacaofilmesapi.domain.repository.projections.AnoContagem;
+import com.williamsilva.avaliacaofilmesapi.domain.repository.projections.EstudioContagem;
 import jakarta.annotation.PostConstruct;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class FilmeService {
@@ -58,5 +65,29 @@ public class FilmeService {
     @Transactional(readOnly = true)
     public Page<Filme> listarTodos(FilmeFiltro filtro, Pageable pageable) {
         return filmeRepository.findAll(FilmeSpec.comFiltro(filtro), pageable);
+    }
+
+    public List<Filme> listarVencedores() {
+        return filmeRepository.findAll().stream().filter(Filme::isVencedor).toList();
+    }
+
+    public List<AnoContagem> obterAnosComMaisDeUmVencedor() {
+        return filmeRepository.encontrarAnosComMaisDeUmVencedor();
+    }
+
+    public List<EstudioContagem> obterEstudiosComMaisDeUmVencedor() {
+        List<Filme> filmesVencedores = listarVencedores();
+
+        Map<String, Long> contagemPorEstudio = new HashMap<>();
+        filmesVencedores.forEach(filme -> {
+            Arrays.stream(filme.getEstudios().split(",\\s*"))
+                    .forEach(estudio -> contagemPorEstudio.merge(estudio, 1L, Long::sum));
+        });
+
+        return contagemPorEstudio.entrySet().stream()
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .limit(3)
+                .map(entry -> new EstudioContagem(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
     }
 }
